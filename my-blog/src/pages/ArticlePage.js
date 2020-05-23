@@ -8,12 +8,14 @@ import NotFoundPage from "./NotFoundPage";
 
 const ArticlePage = ({match}) =>{
     const name = match.params.name;
+
     const article = articleContent.find(article => article.name === name);
+
     const [articleInfo,setArticleInfo] = useState({upvotes:0,comments:[]});
 
     useEffect(()=>{
         const fetchData = async () => {
-            const result = await fetch(`/api/articles/${name}`)
+            const result = await fetch(`/api/articles/${name}`);
             const body = await result.json();
             setArticleInfo(body);
         }
@@ -21,6 +23,7 @@ const ArticlePage = ({match}) =>{
     },[name]);
 
     if(!article) return <NotFoundPage />
+
     const otherArticles = articleContent.filter(article => article.name !== name);
     return(
         <>
